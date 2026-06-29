@@ -1,0 +1,30 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+crash.log
+
+# Private — never pushed to GitHub
+_private/
+
+# AWS credentials / secrets
+.env
+*.pem
+*.key
+credentials
+aws_credentials*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
