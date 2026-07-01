@@ -2,6 +2,12 @@ provider "aws" {
   region = var.region
 }
 
+terraform {
+  backend "s3" {
+
+  }
+}
+
 data "aws_s3_bucket" "nico-day-2-bucket" {
   bucket = var.bucket_name
 }
