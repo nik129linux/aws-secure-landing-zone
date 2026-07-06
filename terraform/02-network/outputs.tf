@@ -1,14 +1,13 @@
 # Modules don't auto-expose their resources' attributes to whoever calls them — every value the
 # parent (root main.tf) or a sibling module needs back has to be declared here explicitly.
 output "vpc_id" {
-  value = aws_vpc.network.id
+  value = module.network.vpc_id
 }
 
-# count = 2 makes these resources lists — [*] (splat) collects every instance's id.
 output "private_route_table_ids" {
-  value = aws_route_table.private[*].id
+  value = module.network.private_route_table_ids
 }
 
 output "public_route_table_ids" {
-  value = aws_route_table.public[*].id
+  value = module.network.public_route_table_ids
 }

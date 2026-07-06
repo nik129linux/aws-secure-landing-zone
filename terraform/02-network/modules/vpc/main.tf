@@ -60,7 +60,18 @@ resource "aws_subnet" "private" {
 
   tags = { Name = "network-private-${element([var.avz, var.avz2], count.index)}" }
 }
+resource "aws_route_table" "private" {
+  count  = 2
+  vpc_id = aws_vpc.network.id
 
+  tags = { Name = "network-private-${element([var.avz, var.avz2], count.index)}" }
+}
+
+resource "aws_route_table_association" "private_association" {
+  count          = 2
+  route_table_id = aws_route_table.private[count.index].id
+  subnet_id      = aws_subnet.private[count.index].id
+}
 # DECISION (2026-07-03): no NAT Gateway. Private subnets have no default route out and rely on the
 # VPC's implicit main route table (local traffic only, no 0.0.0.0/0). Reasons: NAT Gateway is not
 # free-tier eligible (~$0.045/hr + per-GB, runs 24/7 regardless of use); nothing behind the private
