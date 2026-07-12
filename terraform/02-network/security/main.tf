@@ -1,5 +1,5 @@
 
-# Web-facing SG: only HTTPS/HTTP inbound, no SSH — matches the day 9 no-SSH pattern (SSM only for admin access).
+# Web-facing SG: only HTTPS/HTTP inbound, no SSH — matches the day 6 no-SSH pattern (SSM only for admin access).
 resource "aws_security_group" "web" {
   name        = "${var.project_name}-web"
   description = "Security group for web-facing resources (80/443 inbound only)"
@@ -36,7 +36,7 @@ resource "aws_security_group" "ssm_access" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   tags = { Name = "sg-ssm-manager" }
 }

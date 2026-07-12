@@ -36,3 +36,18 @@ module "security" {
   # one module's value can reach another module — never directly between two child modules.
   vpc_id = module.network.vpc_id
 }
+
+data "aws_ami" "default" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}

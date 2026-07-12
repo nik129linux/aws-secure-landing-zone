@@ -11,3 +11,21 @@ output "private_route_table_ids" {
 output "public_route_table_ids" {
   value = module.network.public_route_table_ids
 }
+
+output "private_subnet_ids" {
+  value = module.network.private_subnet_ids
+}
+
+output "public_subnet_ids" {
+  value = module.network.public_subnet_ids
+}
+output "ssm_access_sg_id" {
+  value = module.security.ssm_access_sg_id
+}
+
+output "web_sg_id" {
+  value = module.security.web_sg_id
+}
+output "ami_id" {
+  value = data.aws_ami.default.id
+}
