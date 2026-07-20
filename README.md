@@ -2,6 +2,10 @@
 
 Secure AWS landing zone built from scratch — IAM, Terraform, logging, detection, IR, and Python security automation.
 
+**Scope note:** this is a *single-account* secure baseline today. A full landing zone implies AWS
+Organizations, multiple accounts, centralized logging, and SCPs — that multi-account expansion is
+planned, not yet built.
+
 Built as part of a 142-day Cloud Security Engineering roadmap.
 
 ## What's in here
