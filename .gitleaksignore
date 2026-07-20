@@ -1,0 +1,4 @@
+# False positives, reviewed and documented — see _private/evidence/day17-repo-hygiene.md
+# S3 object key literal, not a credential. gitleaks' generic-api-key rule fires on any
+# "key = <entropy string>" pattern regardless of context.
+terraform/06-kms/main.tf:generic-api-key:75
