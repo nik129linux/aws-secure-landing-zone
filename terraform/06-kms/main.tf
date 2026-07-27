@@ -46,7 +46,7 @@ resource "aws_kms_key" "main" {
         Effect = "Allow"
         Principal = {
           AWS = [
-            "arn:aws:iam::123456789012:user/nic-lab"
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:user/nic-lab"
           ]
         },
         # GenerateDataKey + Decrypt: the caller uploading/reading the S3 object needs these
