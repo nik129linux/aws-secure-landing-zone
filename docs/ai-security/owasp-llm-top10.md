@@ -32,7 +32,7 @@ write sheet, notify owner). Findings cite the node they came from.
 | LLM01 | Prompt Injection | User text the model obeys as if it were my instruction | 🔴 Exposed — 2 vectors |
 | LLM02 | Sensitive Information Disclosure | Model reveals its prompt or another user's data | 🟢 Low by design |
 | LLM03 | Supply Chain | Poisoned models, packages, plugins, MCP servers | 🟢 No third-party nodes |
-| LLM04 | Data & Model Poisoning | Someone tampers with what the model reads or learns from | 🔴 Exposed — link-shared sheet |
+| LLM04 | Data & Model Poisoning | Someone tampers with what the model reads or learns from | 🟢 **Found and remediated 2026-07-26** |
 | LLM05 | Improper Output Handling | Acting on model output without validating it | 🟡 One instance found in testing + fixed |
 | LLM06 | Excessive Agency | Agent can do more than the task requires | 🟡 Well bounded, one leak |
 | LLM07 | System Prompt Leakage | The system prompt gets extracted | 🟢 Nothing secret in it |
@@ -40,8 +40,9 @@ write sheet, notify owner). Findings cite the node they came from.
 | LLM09 | Misinformation | Model invents confidently and someone acts on it | 🔴 Highest business risk |
 | LLM10 | Unbounded Consumption | No rate or cost limits — denial of wallet | 🔴 No limiting anywhere |
 
-4 red · 2 yellow · 3 green · 1 N/A.
-**The three greens are green because of design decisions, not luck** — documented under each.
+**At time of review:** 4 red · 2 yellow · 3 green · 1 N/A.
+**After same-session remediation:** 3 red · 2 yellow · 4 green · 1 N/A — LLM04 closed on 2026-07-26.
+The greens are green because of design decisions, not luck — documented under each.
 
 ---
 
@@ -129,7 +130,12 @@ is the same as classic dependency hygiene: know who wrote what you loaded.
 `historyText` and injects into the prompt. Anyone who can edit that spreadsheet can write
 arbitrary text straight into the model's context.
 
-Current access: me, the client, **plus link sharing enabled**.
+**Access at time of review:** me, the client, **plus link sharing enabled** — meaning anyone holding
+the URL could edit the model's context.
+
+**Remediated 2026-07-26, same session as the review.** General access changed from "anyone with the
+link" to "restricted"; the sheet is now shared with two named accounts only. This was the cheapest
+fix on the page and it closes the risk outright, so LLM04 moves from red to green.
 
 The security control here is not code, it is the **spreadsheet ACL**. That is the whole finding.
 It maps cleanly to the S3 bucket-policy work in `terraform/05-s3-baseline` — the data store's
@@ -245,7 +251,7 @@ than leaving them as silent debt:
 | Decision | Why it was made | What it costs | Disposition |
 |---|---|---|---|
 | Hosted model (`gemma4:31b-cloud`) instead of local | Faster to get working; no local GPU provisioning | Customer messages, including health-adjacent ones, leave to a third party | Revisit before any production traffic. Local inference or a provider with a signed data agreement. |
-| Google Sheet as memory + booking store, shared by link | Client (non-technical) needed to see and edit bookings herself | The prompt's input surface is as open as the sheet's ACL | **Revoke link sharing, move to explicit per-account access.** Cheapest fix on this page. |
+| Google Sheet as memory + booking store, shared by link | Client (non-technical) needed to see and edit bookings herself | The prompt's input surface is as open as the sheet's ACL | ✅ **Done 2026-07-26** — link sharing revoked, restricted to two named accounts. |
 | Flat prompt string, no role separation | The n8n chain node's default shape; worked immediately | LLM01, both vectors | Structural fix in v2 — role split + delimit and escape all attacker-controlled fields. |
 | No rate limiting | Not a concern in a demo with one tester | LLM10 | Add per-sender throttle before production. |
 
@@ -255,7 +261,7 @@ than leaving them as silent debt:
 
 Priority order. Dates are set on the board, not here.
 
-1. **Revoke link sharing on the memory sheet.** Minutes of work, closes LLM04.
+1. ~~**Revoke link sharing on the memory sheet.**~~ ✅ **Done 2026-07-26**, same session as the review. Closed LLM04.
 2. **Escape and delimit `clientName` and message body** before interpolation; stop treating profile
    metadata as trusted. Partial LLM01.
 3. **Per-sender rate limit** in the workflow entry path. Closes LLM10, reduces the LLM06 leak.
