@@ -32,7 +32,7 @@ write sheet, notify owner). Findings cite the node they came from.
 | LLM01 | Prompt Injection | User text the model obeys as if it were my instruction | 🔴 Exposed — 2 vectors |
 | LLM02 | Sensitive Information Disclosure | Model reveals its prompt or another user's data | 🟢 Low by design |
 | LLM03 | Supply Chain | Poisoned models, packages, plugins, MCP servers | 🟢 No third-party nodes |
-| LLM04 | Data & Model Poisoning | Someone tampers with what the model reads or learns from | 🟢 **Found and remediated 2026-07-26** |
+| LLM04 | Data & Model Poisoning | Someone tampers with what the model reads or learns from | 🟢 remediated 2026-07-26** |
 | LLM05 | Improper Output Handling | Acting on model output without validating it | 🟡 One instance found in testing + fixed |
 | LLM06 | Excessive Agency | Agent can do more than the task requires | 🟡 Well bounded, one leak |
 | LLM07 | System Prompt Leakage | The system prompt gets extracted | 🟢 Nothing secret in it |
