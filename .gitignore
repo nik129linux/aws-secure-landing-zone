@@ -18,6 +18,15 @@ crash.log
 # Private — never pushed to GitHub
 _private/
 
+# Python venvs / script output (real account data)
+.venv/
+**/output/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.log
+
 # AWS credentials / secrets
 .env
 *.pem
