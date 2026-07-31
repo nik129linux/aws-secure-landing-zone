@@ -8,7 +8,7 @@ documented with the bugs I hit on the way.
 the AWS sense implies Organizations, multiple accounts, centralized logging and SCPs — that
 expansion is planned, not built. What is here is deployed and verified.
 
-Part of a 142-day Cloud Security Engineering roadmap. Currently at Day 19.
+Part of a 142-day Cloud Security Engineering roadmap. Currently at Day 24.
 
 ---
 
